@@ -36,6 +36,7 @@ function SearchPage() {
 
     // Task 2. Fetch search results from the API based on user inputs.
     const handleSearch = async () => {
+        console.log(document.getElementById('conditionSelect').value)
         const baseUrl = `${urlConfig.backendUrl}/api/search?`;
         const queryParams = new URLSearchParams({
             name: searchQuery,
@@ -81,6 +82,7 @@ function SearchPage() {
                                 <option key={category} value={category}>{category}</option>
                                 ))}
                             </select>
+
                             <label htmlFor="conditionSelect">Condition</label>
                             <select id="conditionSelect" className="form-control my-1">
                                 <option value="">All</option>
@@ -88,6 +90,7 @@ function SearchPage() {
                                 <option key={condition} value={condition}>{condition}</option>
                                 ))}
                             </select>
+                            
                             {/* Task 4: Implement an age range slider and display the selected value. */}
                             <label htmlFor="ageRange">Less than {ageRange} years</label>
                             <input
