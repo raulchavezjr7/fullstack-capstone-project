@@ -129,8 +129,8 @@ router.put('/update', async (req, res) => {
         return res.status(404).json({error: "User not found"});
     }
     
-    existingUser.updatedAt = new Date();
     existingUser.firstName = req.body.name;
+    existingUser.updatedAt = new Date();
 
     // Task 6: update user credentials in database
     const updatedUser = await collection.findOneAndUpdate(
