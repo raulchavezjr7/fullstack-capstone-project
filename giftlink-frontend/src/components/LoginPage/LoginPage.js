@@ -25,14 +25,12 @@ function LoginPage() {
     // insert code here to create handleLogin function and include console.log
     const handleLogin = async () => {
         //first task
-        console.log(email)
-        console.log(password)
         const response = await fetch(`${urlConfig.backendUrl}/api/auth/login`, {
                 //Task 7: Set method
                 method: 'POST',
                 //Task 8: Set headers
                 headers: {
-                    'content-type': 'appliation/json',
+                    'content-type': 'application/json',
                     'Authorization': bearerToken ? `Bearer ${bearerToken}` : '',
                 },
                 //Task 9: Set body to send user details

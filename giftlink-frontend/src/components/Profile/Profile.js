@@ -64,18 +64,16 @@ const handleSubmit = async (e) => {
 
     const payload = { ...updatedDetails };
     const response = await fetch(`${urlConfig.backendUrl}/api/auth/update`, {
-      //Step 1: Task 1
-      method: 'PUT',
-      //Step 1: Task 2
-      header: {
-        "Authorization": `Bearer ${authtoken}`,
-        "Content-Type": "application/json",
-        "Email": email,
-      },
-      //Step 1: Task 3
-      body: {
+        //Step 1: Task 1
+        method: 'PUT',
+        //Step 1: Task 2
+        headers: {
+            "Authorization": `Bearer ${authtoken}`,
+            "Content-Type": "application/json",
+            "Email": email,
+        },
+        //Step 1: Task 3
         body: JSON.stringify(payload),
-      }
     });
 
     if (response.ok) {
