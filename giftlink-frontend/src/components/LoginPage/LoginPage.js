@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './LoginPage.css';
-import {urlCongig} from '../../config.js';
-import useAppContext from '../../context/AuthContext.js';
+import {urlConfig} from '../../config';
+import {useAppContext} from '../../context/AuthContext';
 import {useNavigate} from 'react-router-dom';
 
 function LoginPage() {
@@ -24,47 +24,46 @@ function LoginPage() {
     }, [navigate])
     // insert code here to create handleLogin function and include console.log
     const handleLogin = async () => {
-        try{
-            //first task
-          const response = await fetch(`${urlConfig.backendUrl}/api/auth/login`, {
-               //Task 7: Set method
+        //first task
+        console.log(email)
+        console.log(password)
+        const response = await fetch(`${urlConfig.backendUrl}/api/auth/login`, {
+                //Task 7: Set method
                 method: 'POST',
-               //Task 8: Set headers
-               headers: {
-                'content-type': 'appliation/json',
-                'Authorization': bearerToken ? `Bearer ${bearerToken}` : '',
-               },
-               //Task 9: Set body to send user details
-               body: JSON.stringify({
-                email:email,
-                password:password,
-               })
+                //Task 8: Set headers
+                headers: {
+                    'content-type': 'appliation/json',
+                    'Authorization': bearerToken ? `Bearer ${bearerToken}` : '',
+                },
+                //Task 9: Set body to send user details
+                body: JSON.stringify({
+                    email:email,
+                    password:password
+                })
             });
-            // Task 1: Access data coming from fetch API
-            const json = await response.json();
-            if (json.authtoken) {
-                // Task 2: Set user details
-                sessionStorage.setItem('auth-token', json.authtoken);
-                sessionStorage.setItem('name', json.userName);
-                sessionStorage.setItem('email', json.userEmail);            
-                // Task 3: Set the user's state to log in using the `useAppContext`.
-                setIsLoggedIn(true);
-                // Task 4: Navigate to the MainPage after logging in.
-                navigate('/app')
-                // Task 5: Clear input and set an error message if the password is incorrect
-            
-                } else {
-                    document.getElementById("email").value="";
-                    document.getElementById("password").value="";
-                    setIncorrect("Wrong password. Try again.");
-                //Below is optional, but recommended - Clear out error message after 2 seconds
-                    setTimeout(() => {
-                      setIncorrect("");
-                    }, 2000);
-                }
-          }catch (e) {
-            console.log("Error fetching details: " + e.message);
-        }
+        // Task 1: Access data coming from fetch API
+        const json = await response.json();
+        console.log('Json',json);
+        if (json.authtoken) {
+            // Task 2: Set user details
+            sessionStorage.setItem('auth-token', json.authtoken);
+            sessionStorage.setItem('name', json.userName);
+            sessionStorage.setItem('email', json.userEmail);            
+            // Task 3: Set the user's state to log in using the `useAppContext`.
+            setIsLoggedIn(true);
+            // Task 4: Navigate to the MainPage after logging in.
+            navigate('/app')
+            // Task 5: Clear input and set an error message if the password is incorrect
+        
+            } else {
+                document.getElementById("email").value="";
+                document.getElementById("password").value="";
+                setIncorrect("Wrong password. Try again.");
+            //Below is optional, but recommended - Clear out error message after 2 seconds
+                setTimeout(() => {
+                    setIncorrect("");
+                }, 2000);
+            }
     }
 
     return (
@@ -72,9 +71,8 @@ function LoginPage() {
         <div className="row justify-content-center">
           <div className="col-md-6 col-lg-4">
             <div className="login-card p-4 border rounded">
-              <h2 className="text-center mb-4 font-weight-bold">Login</h2>
-
-          {/* insert code here to create input elements for the variables email and  password */}
+                <h2 className="text-center mb-4 font-weight-bold">Login</h2>
+                {/* insert code here to create input elements for the variables email and  password */}
                 <div className='mb-4'>
                     <label htmlFor='email' className='form label'>Email</label>
                     <input
@@ -83,7 +81,7 @@ function LoginPage() {
                         className="form-control"
                         placeholder="Enter your email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => {setEmail(e.target.value); setIncorrect("")}}
                     />
                 </div>
                 <div className='mb-4'>
@@ -94,7 +92,7 @@ function LoginPage() {
                         className="form-control"
                         placeholder="Enter your password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => {setPassword(e.target.value); setIncorrect("")}}
                     />
                     {/* Task 6: Display an error message to the user.*/}
                     <span style={{color:'red',height:'.5cm',display:'block',fontStyle:'italic',fontSize:'12px'}}>

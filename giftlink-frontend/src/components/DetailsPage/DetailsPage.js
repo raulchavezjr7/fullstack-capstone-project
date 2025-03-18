@@ -86,11 +86,10 @@ return (
                 <div className="card-body">
                     <div className="image-placeholder-large">
                         {gift.image ? (
-			// Task 5: Display gift image
 			            <img src={gift.image} alt={gift.name} className="product-image-large" />
                         ) : (
                             <div className="no-image-available-large">No Image Available</div>
-                        )}
+                        )}  
                     </div>
                     // Task 6: Display gift details
                     	<p><strong>Category:</strong> 

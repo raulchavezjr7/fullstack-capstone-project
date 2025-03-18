@@ -9,7 +9,6 @@ const Profile = () => {
     const [updatedDetails, setUpdatedDetails] = useState({});
     const {setUserName} = useAppContext();
     const [changed, setChanged] = useState("");
-
     const [editMode, setEditMode] = useState(false);
     const navigate = useNavigate();
     useEffect(() => {
@@ -99,8 +98,8 @@ const handleSubmit = async (e) => {
       throw new Error("Failed to update profile");
     }
   } catch (error) {
-    console.error(error);
-    // Handle error case
+        console.error(error);
+        // Handle error case
   }
 };
 
